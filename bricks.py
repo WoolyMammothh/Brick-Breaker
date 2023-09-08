@@ -4,6 +4,7 @@ import os
 BLACK, WHITE = (0, 0, 0), (255, 255, 255)
 WIDTH, HEIGHT = 1000, 600
 CHAR_HEIGHT, CHAR_WIDTH = 50, 50
+SPEED = 8
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 # paddle = pygame.draw.rect(screen, WHITE, (100, 50))
 char_image = pygame.image.load(os.path.join('Assets', 'character.png'))
@@ -13,6 +14,17 @@ def update_display(pink):
   screen.fill(BLACK)
   screen.blit(character, (pink.x, pink.y))
   pygame.display.update()
+
+def handle_movement(pink):
+  keys_pressed = pygame.key.get_pressed()
+  if keys_pressed[pygame.K_RIGHT]:
+    pink.x += SPEED
+  if keys_pressed[pygame.K_LEFT]:
+    pink.x -= SPEED
+  if keys_pressed[pygame.K_UP]:
+    pink.y -= SPEED
+  if keys_pressed[pygame.K_DOWN]:
+    pink.y += SPEED
 
 def main():
   pink = pygame.Rect((WIDTH//2)-(CHAR_WIDTH//2), (HEIGHT//2)-(CHAR_HEIGHT//2), 
@@ -25,16 +37,8 @@ def main():
       if event.type == pygame.QUIT:
         running = False
 
-    keys_pressed = pygame.key.get_pressed()
-    if keys_pressed[pygame.K_RIGHT]:
-      pink.x += 10
-    if keys_pressed[pygame.K_LEFT]:
-      pink.x -= 10
-    if keys_pressed[pygame.K_UP]:
-      pink.y -= 10
-    if keys_pressed[pygame.K_DOWN]:
-      pink.y += 10
-    
+    handle_movement(pink)
+
     update_display(pink)
 
   pygame.quit()
