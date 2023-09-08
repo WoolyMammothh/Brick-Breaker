@@ -3,14 +3,14 @@ import pygame
 BLACK = (0, 0, 0)
 WIDTH, HEIGHT = 1000, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-fps = pygame.time.Clock()
-running = True
 
 def update_display():
   screen.fill(BLACK)
   pygame.display.update()
 
 def main():
+  fps = pygame.time.Clock()
+  running = True
   while running:
     fps.tick(60)
     for event in pygame.event.get():
@@ -20,5 +20,5 @@ def main():
 
   pygame.quit()
 
-if __name__ == "__bricks__":
+if __name__ == "__main__":
   main()
