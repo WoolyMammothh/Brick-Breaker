@@ -28,8 +28,13 @@ bullet2_pic = pygame.image.load(os.path.join('Assets', 'child2.png'))
 childsized = pygame.transform.scale(bullet2_pic, (15, 15))
 child2 = pygame.transform.flip(childsized, True, False)
 
+#MAP
+MAP = pygame.image.load(os.path.join('Assets', 'bg.jpeg'))
+MAP = pygame.transform.scale(MAP, (WIDTH, HEIGHT))
+
 def update_display(pink, green, pink_bullets, green_bullets):
   screen.fill(BLACK)
+  screen.blit(MAP, (0, 0))
   screen.blit(character, (pink.x, pink.y))
   screen.blit(character2, (green.x, green.y))
 
