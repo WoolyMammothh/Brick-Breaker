@@ -22,7 +22,6 @@ char2_image = pygame.image.load(os.path.join('Assets', 'character2.png'))
 charactersized = pygame.transform.scale(char2_image, (CHAR_WIDTH, CHAR_HEIGHT))
 character2 = pygame.transform.flip(charactersized, True, False)
   
-
 #BULLETS
 bullet_pic = pygame.image.load(os.path.join('Assets', 'child.png'))
 child = pygame.transform.scale(bullet_pic, (25, 25))
