@@ -3,7 +3,7 @@ import os
 
 BLACK, WHITE = (0, 0, 0), (255, 255, 255)
 WIDTH, HEIGHT = 1000, 600
-CHAR_HEIGHT, CHAR_WIDTH = 50, 50
+CHAR_HEIGHT, CHAR_WIDTH = 70, 70
 SPEED = 8
 BULLET_SPEED = 12
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -23,13 +23,13 @@ character2 = pygame.transform.flip(charactersized, True, False)
 
 #BULLETS
 bullet_pic = pygame.image.load(os.path.join('Assets', 'child.png'))
-child = pygame.transform.scale(bullet_pic, (15, 15))
+child = pygame.transform.scale(bullet_pic, (25, 25))
 bullet2_pic = pygame.image.load(os.path.join('Assets', 'child2.png'))
-childsized = pygame.transform.scale(bullet2_pic, (15, 15))
+childsized = pygame.transform.scale(bullet2_pic, (25, 25))
 child2 = pygame.transform.flip(childsized, True, False)
 
 #MAP
-MAP = pygame.image.load(os.path.join('Assets', 'bg.jpeg'))
+MAP = pygame.image.load(os.path.join('Assets', 'bg7.jpeg'))
 MAP = pygame.transform.scale(MAP, (WIDTH, HEIGHT))
 
 def update_display(pink, green, pink_bullets, green_bullets):
