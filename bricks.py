@@ -1,5 +1,6 @@
 import pygame
 import os
+pygame.font.init()
 
 BLACK, WHITE = (0, 0, 0), (255, 255, 255)
 WIDTH, HEIGHT = 1000, 600
@@ -7,6 +8,7 @@ CHAR_HEIGHT, CHAR_WIDTH = 70, 70
 SPEED = 8
 BULLET_SPEED = 12
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+lives_text = pygame.font.SysFont('monospace', 20, True, False)
 # paddle = pygame.draw.rect(screen, WHITE, (100, 50))
 
 #HIT EVENTS
@@ -32,11 +34,17 @@ child2 = pygame.transform.flip(childsized, True, False)
 MAP = pygame.image.load(os.path.join('Assets', 'bg7.jpeg'))
 MAP = pygame.transform.scale(MAP, (WIDTH, HEIGHT))
 
-def update_display(pink, green, pink_bullets, green_bullets):
+def update_display(pink, green, pink_bullets, green_bullets, pink_lives, green_lives):
   screen.fill(BLACK)
   screen.blit(MAP, (0, 0))
+
+  pink_lives_text = lives_text.render(f'Lives: {str(pink_lives)}', 1, WHITE)
+  green_lives_text = lives_text.render(f'Lives: {str(green_lives)}', 1, WHITE)
+
   screen.blit(character, (pink.x, pink.y))
   screen.blit(character2, (green.x, green.y))
+  screen.blit(pink_lives_text, (10, 10))
+  screen.blit(green_lives_text, (WIDTH - green_lives_text.get_width() - 10, 10))
 
   for bullet in pink_bullets:
     pygame.draw.rect(screen, BLACK, bullet)
@@ -51,7 +59,7 @@ def update_display(pink, green, pink_bullets, green_bullets):
 def handle_movement(pink, green):
   keys_pressed = pygame.key.get_pressed()
   #Movement for pink
-  if keys_pressed[pygame.K_d] and pink.x + CHAR_WIDTH <= WIDTH//2 - 20:
+  if keys_pressed[pygame.K_d] and pink.x + CHAR_WIDTH <= WIDTH//2 - 50:
     pink.x += SPEED
   if keys_pressed[pygame.K_a] and pink.x >= 0:
     pink.x -= SPEED
@@ -63,7 +71,7 @@ def handle_movement(pink, green):
   #Movement for green
   if keys_pressed[pygame.K_RIGHT] and green.x + CHAR_WIDTH <= WIDTH:
     green.x += SPEED
-  if keys_pressed[pygame.K_LEFT] and green.x >= WIDTH//2 + 20:
+  if keys_pressed[pygame.K_LEFT] and green.x >= WIDTH//2 + 50:
     green.x -= SPEED
   if keys_pressed[pygame.K_UP] and green.y >= 0:
     green.y -= SPEED
@@ -100,6 +108,11 @@ def main():
   running = True
   pink_bullets = []
   green_bullets = []
+
+  pink_lives = 10
+  green_lives = 10
+
+  winner_text = ""
   while running:
     fps.tick(60)
     for event in pygame.event.get():
@@ -114,12 +127,25 @@ def main():
         if event.key == pygame.K_RCTRL:
           bullet = pygame.Rect(green.x, green.y + 15, 1, 1)
           green_bullets.append(bullet)
-          
+
+      if event.type == PINK_HIT:
+        pink_lives -= 1
+      if event.type == GREEN_HIT:
+        green_lives -= 1
+    
+    winner_text = ""
+    if pink_lives <= 0:
+      winner_text = "Green Wins!"
+      pygame.quit()
+    if green_lives <= 0:
+      winner_text = "Pink Wins!"
+      pygame.quit()
+
     shoot_bullets(pink, green, pink_bullets, green_bullets)
 
     handle_movement(pink, green)
 
-    update_display(pink, green, pink_bullets, green_bullets)
+    update_display(pink, green, pink_bullets, green_bullets, pink_lives, green_lives)
 
   pygame.quit()
 
