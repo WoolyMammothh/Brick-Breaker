@@ -92,6 +92,7 @@ def shoot_bullets(pink, green, pink_bullets, green_bullets):
   for bullet in green_bullets:
       bullet.x -= 20
       if pink.colliderect(bullet):
+        pygame.event.post(pygame.event.Event(PINK_HIT))
         green_bullets.remove(bullet)
       elif bullet.x > WIDTH:
         pink_bullets.remove(bullet)
