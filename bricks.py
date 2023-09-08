@@ -20,7 +20,9 @@ character2 = pygame.transform.flip(charactersized, True, False)
 #BULLETS
 bullet_pic = pygame.image.load(os.path.join('Assets', 'child.png'))
 child = pygame.transform.scale(bullet_pic, (15, 15))
-
+bullet2_pic = pygame.image.load(os.path.join('Assets', 'child2.png'))
+childsized = pygame.transform.scale(bullet2_pic, (15, 15))
+child2 = pygame.transform.flip(childsized, True, False)
 
 def update_display(pink, green, pink_bullets, green_bullets):
   screen.fill(BLACK)
@@ -33,7 +35,7 @@ def update_display(pink, green, pink_bullets, green_bullets):
 
   for bullet in green_bullets:
     pygame.draw.rect(screen, BLACK, bullet)
-    screen.blit(child, bullet)
+    screen.blit(child2, bullet)
 
   pygame.display.update()
 
