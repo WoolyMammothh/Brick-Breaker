@@ -24,6 +24,17 @@ def main():
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         running = False
+
+    keys_pressed = pygame.key.get_pressed()
+    if keys_pressed[pygame.K_RIGHT]:
+      pink.x += 10
+    if keys_pressed[pygame.K_LEFT]:
+      pink.x -= 10
+    if keys_pressed[pygame.K_UP]:
+      pink.y -= 10
+    if keys_pressed[pygame.K_DOWN]:
+      pink.y += 10
+    
     update_display(pink)
 
   pygame.quit()
