@@ -22,12 +22,16 @@ bullet_pic = pygame.image.load(os.path.join('Assets', 'child.png'))
 child = pygame.transform.scale(bullet_pic, (15, 15))
 
 
-def update_display(pink, green, bullets):
+def update_display(pink, green, pink_bullets, green_bullets):
   screen.fill(BLACK)
   screen.blit(character, (pink.x, pink.y))
   screen.blit(character2, (green.x, green.y))
 
-  for bullet in bullets:
+  for bullet in pink_bullets:
+    pygame.draw.rect(screen, BLACK, bullet)
+    screen.blit(child, bullet)
+
+  for bullet in green_bullets:
     pygame.draw.rect(screen, BLACK, bullet)
     screen.blit(child, bullet)
 
@@ -57,11 +61,17 @@ def handle_movement(pink, green):
 
 
 
-def shoot_bullets(bullets):
-  for bullet in bullets:
+def shoot_bullets(pink_bullets, green_bullets):
+  for bullet in pink_bullets:
       bullet.x += 20
       if bullet.x >= WIDTH:
-        bullets.remove(bullet)
+        pink_bullets.remove(bullet)
+  
+  for bullet in green_bullets:
+      bullet.x -= 20
+      if bullet.x <= 0:
+        green_bullets.remove(bullet)
+
 
 
 def main():
@@ -72,7 +82,8 @@ def main():
                       CHAR_WIDTH, CHAR_HEIGHT)
   fps = pygame.time.Clock()
   running = True
-  bullets = []
+  pink_bullets = []
+  green_bullets = []
   while running:
     fps.tick(60)
     for event in pygame.event.get():
@@ -82,13 +93,17 @@ def main():
       if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_f:
           bullet = pygame.Rect(pink.x + CHAR_WIDTH, pink.y + 15, 1, 1)
-          bullets.append(bullet)
+          pink_bullets.append(bullet)
+
+        if event.key == pygame.K_RCTRL:
+          bullet = pygame.Rect(green.x, green.y + 15, 1, 1)
+          green_bullets.append(bullet)
           
-    shoot_bullets(bullets)
+    shoot_bullets(pink_bullets, green_bullets)
 
     handle_movement(pink, green)
 
-    update_display(pink, green, bullets)
+    update_display(pink, green, pink_bullets, green_bullets)
 
   pygame.quit()
 
