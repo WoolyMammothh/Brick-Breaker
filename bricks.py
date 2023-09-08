@@ -9,6 +9,7 @@ SPEED = 8
 BULLET_SPEED = 12
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 lives_text = pygame.font.SysFont('monospace', 20, True, False)
+winner_text = pygame.font.SysFont('monospace', 60, True, False)
 # paddle = pygame.draw.rect(screen, WHITE, (100, 50))
 
 #HIT EVENTS
@@ -54,6 +55,12 @@ def update_display(pink, green, pink_bullets, green_bullets, pink_lives, green_l
     screen.blit(child2, bullet)
 
   pygame.display.update()
+
+def winner(text):
+  winner = winner_text.render(text, 1, WHITE)
+  screen.blit(winner, (WIDTH//2 - winner.get_width()//2, HEIGHT//2 - winner.get_height()//2))
+  pygame.display.update()
+  pygame.time.delay(5000)
 
 def handle_movement(pink, green):
   keys_pressed = pygame.key.get_pressed()
@@ -118,6 +125,7 @@ def main():
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         running = False
+        pygame.quit()
       
       if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_f:
@@ -135,11 +143,13 @@ def main():
     
     winner_text = ""
     if pink_lives <= 0:
-      winner_text = "Green Wins!"
-      pygame.quit()
+      winner_text = "GREEN WINS!"
     if green_lives <= 0:
-      winner_text = "Pink Wins!"
-      pygame.quit()
+      winner_text = "PINK WINS!"
+    if winner_text != "":
+      winner(winner_text)
+      break
+    
 
     shoot_bullets(pink, green, pink_bullets, green_bullets)
 
@@ -147,7 +157,7 @@ def main():
 
     update_display(pink, green, pink_bullets, green_bullets, pink_lives, green_lives)
 
-  pygame.quit()
+  main()
 
 if __name__ == "__main__":
   main()
