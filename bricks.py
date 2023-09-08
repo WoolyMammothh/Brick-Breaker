@@ -17,13 +17,13 @@ def update_display(pink):
 
 def handle_movement(pink):
   keys_pressed = pygame.key.get_pressed()
-  if keys_pressed[pygame.K_RIGHT]:
+  if keys_pressed[pygame.K_RIGHT] and pink.x + CHAR_WIDTH <= WIDTH:
     pink.x += SPEED
-  if keys_pressed[pygame.K_LEFT]:
+  if keys_pressed[pygame.K_LEFT] and pink.x >= 0:
     pink.x -= SPEED
-  if keys_pressed[pygame.K_UP]:
+  if keys_pressed[pygame.K_UP] and pink.y >= 0:
     pink.y -= SPEED
-  if keys_pressed[pygame.K_DOWN]:
+  if keys_pressed[pygame.K_DOWN] and pink.y + CHAR_HEIGHT <= HEIGHT:
     pink.y += SPEED
 
 def main():
