@@ -9,6 +9,10 @@ BULLET_SPEED = 12
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 # paddle = pygame.draw.rect(screen, WHITE, (100, 50))
 
+#HIT EVENTS
+GREEN_HIT = pygame.USEREVENT + 1
+PINK_HIT = pygame.USEREVENT + 2
+
 #CHARACTERS
 char1_image = pygame.image.load(os.path.join('Assets', 'character.png'))
 character = pygame.transform.scale(char1_image, (CHAR_WIDTH, CHAR_HEIGHT))
@@ -63,15 +67,16 @@ def handle_movement(pink, green):
 
 
 
-def shoot_bullets(pink_bullets, green_bullets):
+def shoot_bullets(pink, green, pink_bullets, green_bullets):
   for bullet in pink_bullets:
       bullet.x += 20
-      if bullet.x >= WIDTH:
+      if green.colliderect(bullet):
+        pygame.event.post(pygame.event.Event(GREEN_HIT))
         pink_bullets.remove(bullet)
   
   for bullet in green_bullets:
       bullet.x -= 20
-      if bullet.x <= 0:
+      if pink.colliderect(bullet):
         green_bullets.remove(bullet)
 
 
@@ -101,7 +106,7 @@ def main():
           bullet = pygame.Rect(green.x, green.y + 15, 1, 1)
           green_bullets.append(bullet)
           
-    shoot_bullets(pink_bullets, green_bullets)
+    shoot_bullets(pink, green, pink_bullets, green_bullets)
 
     handle_movement(pink, green)
 
