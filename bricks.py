@@ -8,6 +8,9 @@ WIDTH, HEIGHT = 1000, 600
 CHAR_HEIGHT, CHAR_WIDTH = 70, 70
 SPEED = 6
 BULLET_SPEED = 12
+
+pygame.display.set_caption("Sussy Shooter")
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 lives_text = pygame.font.SysFont('monospace', 20, True, False)
 winner_text = pygame.font.SysFont('monospace', 60, True, False)
@@ -116,6 +119,7 @@ def main():
                       CHAR_WIDTH, CHAR_HEIGHT)
   fps = pygame.time.Clock()
   running = True
+
   pink_bullets = []
   green_bullets = []
 
