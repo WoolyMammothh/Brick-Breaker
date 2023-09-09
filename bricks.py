@@ -12,6 +12,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 lives_text = pygame.font.SysFont('monospace', 20, True, False)
 winner_text = pygame.font.SysFont('monospace', 60, True, False)
 SHOTS = pygame.mixer.Sound(os.path.join('Assets', 'shots.mp3'))
+SCREAM = pygame.mixer.Sound(os.path.join('Assets', 'scream2.mp3'))
 # paddle = pygame.draw.rect(screen, WHITE, (100, 50))
 
 #HIT EVENTS
@@ -141,17 +142,22 @@ def main():
           SHOTS.play()
 
       if event.type == PINK_HIT:
+        SCREAM.stop()
+        SCREAM.play(0, 400, 1)
         pink_lives -= 1
       if event.type == GREEN_HIT:
+        SCREAM.stop()
+        SCREAM.play(0, 400, 1)
         green_lives -= 1
     
     winner_text = ""
     if pink_lives <= 0:
       winner_text = "GREEN WINS!"
     if green_lives <= 0:
-      winner_text = "PINK WINS!"
+      winner_text = "PINK WINS!"  
     if winner_text != "":
       winner(winner_text)
+      SCREAM.stop()
       break
     
 
