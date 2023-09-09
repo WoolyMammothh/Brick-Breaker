@@ -1,15 +1,17 @@
 import pygame
 import os
 pygame.font.init()
+pygame.mixer.init()
 
 BLACK, WHITE = (0, 0, 0), (255, 255, 255)
 WIDTH, HEIGHT = 1000, 600
 CHAR_HEIGHT, CHAR_WIDTH = 70, 70
-SPEED = 8
+SPEED = 6
 BULLET_SPEED = 12
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 lives_text = pygame.font.SysFont('monospace', 20, True, False)
 winner_text = pygame.font.SysFont('monospace', 60, True, False)
+SHOTS = pygame.mixer.Sound(os.path.join('Assets', 'shots.mp3'))
 # paddle = pygame.draw.rect(screen, WHITE, (100, 50))
 
 #HIT EVENTS
@@ -131,10 +133,12 @@ def main():
         if event.key == pygame.K_f:
           bullet = pygame.Rect(pink.x + CHAR_WIDTH, pink.y + 15, 1, 1)
           pink_bullets.append(bullet)
+          SHOTS.play()
 
         if event.key == pygame.K_RCTRL:
           bullet = pygame.Rect(green.x, green.y + 15, 1, 1)
           green_bullets.append(bullet)
+          SHOTS.play()
 
       if event.type == PINK_HIT:
         pink_lives -= 1
