@@ -70,6 +70,7 @@ def winner(text):
 
 def handle_movement(pink, green):
   keys_pressed = pygame.key.get_pressed()
+
   #Movement for pink
   if keys_pressed[pygame.K_d] and pink.x + CHAR_WIDTH <= WIDTH//2 - 50:
     pink.x += SPEED
@@ -117,6 +118,7 @@ def main():
   green = pygame.Rect(WIDTH - CHAR_WIDTH - 10, 
                       (HEIGHT//2)-(CHAR_HEIGHT//2),
                       CHAR_WIDTH, CHAR_HEIGHT)
+  
   fps = pygame.time.Clock()
   running = True
 
